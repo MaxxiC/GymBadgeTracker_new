@@ -34,8 +34,8 @@
   "login": {
     "title": "Welcome back",
     "subtitle": "Sign in to your account to continue",
-    "email_label": "Email Address",
-    "email_placeholder": "e.g. mario@gym.com",
+    "email_label": "Email or Username",
+    "email_placeholder": "e.g. mario@gym.com or mario99",
     "password_label": "Password",
     "password_placeholder": "••••••••",
     "submit": "Sign in to Workspace",

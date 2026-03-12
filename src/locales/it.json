@@ -34,8 +34,8 @@
   "login": {
     "title": "Bentornato",
     "subtitle": "Accedi al tuo account per continuare",
-    "email_label": "Indirizzo Email",
-    "email_placeholder": "es. mario@palestra.it",
+    "email_label": "Email o Username",
+    "email_placeholder": "es. mario@palestra.it oppure mario99",
     "password_label": "Password",
     "password_placeholder": "••••••••",
     "submit": "Accedi all'Area di Lavoro",
