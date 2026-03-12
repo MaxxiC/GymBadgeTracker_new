@@ -58,5 +58,17 @@
     "history_reuse": "Reuse",
     "status_done": "Processed",
     "status_waiting": "Waiting"
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your personal information and access",
+    "account_info": "Account Information",
+    "name": "Username",
+    "email": "Email",
+    "role": "Role",
+    "member_since": "Member Since",
+    "stats": "Statistics",
+    "total_process": "Total Files Processed",
+    "last_login": "Last Login"
   }
 }

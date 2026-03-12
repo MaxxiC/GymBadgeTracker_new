@@ -1,9 +1,17 @@
 {
   "nav": {
+    "login": "Accedi",
+    "logout": "Esci",
+    "profile": "Il mio profilo",
     "workspace": "Area di lavoro",
-    "badges": "I miei Badge",
+    "badges": "Gestione Badge",
+    "home": "Dashboard",
+    "admin": "Admin",
+    "features": "Funzionalità",
     "info": "Info",
-    "login": "Accedi"
+    "about": "Chi siamo",
+    "privacy": "Privacy policy",
+    "cookie": "Cookie policy"
   },
   "home": {
     "pill": "Piattaforma gamificata",
@@ -58,5 +66,17 @@
     "history_reuse": "Riusa",
     "status_done": "Elaborato",
     "status_waiting": "In attesa"
+  },
+  "profile": {
+    "title": "Il Mio Profilo",
+    "subtitle": "Gestisci le tue informazioni personali e di accesso",
+    "account_info": "Informazioni Account",
+    "name": "Nome Utente",
+    "email": "Email",
+    "role": "Ruolo",
+    "member_since": "Iscritto dal",
+    "stats": "Statistiche",
+    "total_process": "File Elaborati totali",
+    "last_login": "Ultimo Accesso"
   }
 }
