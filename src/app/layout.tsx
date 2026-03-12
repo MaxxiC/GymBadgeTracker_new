@@ -28,27 +28,40 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        try {
+          var theme = localStorage.getItem('theme');
+          if (theme === 'dark' || (!theme && true)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch(e) {}
+      `,
+          }}
+        />
+      </head>
       <body
         className={`${dmSans.variable} ${syne.variable} font-sans antialiased`}
       >
         <LanguageProvider>
           <ThemeProvider
             attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* Background Elements from Mockup */}
-          <div className="bg-noise"></div>
-          
-          <Navbar />
-          
-          {/* Main content area expands to push footer down */}
-          <main className="flex-1 flex flex-col relative z-[2]">
-            {children}
-          </main>
-          
-          <Footer />
+            defaultTheme="dark"
+            enableSystem
+          >
+            {/* Background Elements from Mockup */}
+            <div className="bg-noise"></div>
+
+            <Navbar />
+
+            {/* Main content area expands to push footer down */}
+            <main className="flex-1 flex flex-col relative z-[2]">
+              {children}
+            </main>
+
+            <Footer />
           </ThemeProvider>
         </LanguageProvider>
       </body>
