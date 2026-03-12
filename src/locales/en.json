@@ -1,0 +1,34 @@
+{
+  "nav": {
+    "workspace": "Workspace",
+    "badges": "My Badges",
+    "info": "Info",
+    "login": "Sign In"
+  },
+  "home": {
+    "pill": "Gamified platform",
+    "title_1": "Track. Unlock.",
+    "title_2": "Rule the gym.",
+    "subtitle": "Log your workouts, earn exclusive badges for your PRs, and climb the leaderboards. Your progression, visualized like never before.",
+    "cta_primary": "Start now",
+    "cta_secondary": "See how it works",
+    "stats_workout": "workouts tracked",
+    "stats_badges": "badges unlocked",
+    "how_it_works": "How it works",
+    "step_1": "Log your workout",
+    "step_2": "Earn Points & XP",
+    "step_3": "Unlock Elite Badges",
+    "preview": "Dashboard Preview →"
+  },
+  "footer": {
+    "about": "About Us",
+    "privacy": "Privacy Policy",
+    "cookie": "Cookie Policy"
+  },
+  "404": {
+    "title": "404",
+    "subtitle": "Page not found",
+    "desc": "The page you are looking for might have been removed or is temporarily unavailable.",
+    "back": "Back to Home"
+  }
+}
