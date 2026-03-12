@@ -5,11 +5,16 @@ import { useTheme } from "next-themes";
 import { Moon, Sun, Monitor, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/components/language-provider";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const { locale, setLocale, t } = useLanguage();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+
+  // Fake auth check for UI
+  const isAuthenticated = pathname?.includes("/dashboard");
 
   // Evitare hydration mismatch con next-themes
   useEffect(() => {
@@ -83,13 +88,23 @@ export default function Navbar() {
           <Menu size={16} />
         </button>
 
-        {/* Login Btn */}
-        <Link 
-          href="/login"
-          className="hidden sm:block px-4 py-1.5 border border-white/15 dark:border-white/10 rounded-lg text-[13px] bg-white/5 text-foreground hover:bg-white/10 transition-colors"
-        >
-          {t("nav.login")}
-        </Link>
+        {/* Login Btn OR Avatar */}
+        {!isAuthenticated ? (
+          <Link 
+            href="/login"
+            className="hidden sm:block px-4 py-1.5 border border-white/15 dark:border-white/10 rounded-lg text-[13px] bg-white/5 text-foreground hover:bg-white/10 transition-colors ml-2"
+          >
+            {t("nav.login")}
+          </Link>
+        ) : (
+          <div className="hidden sm:flex items-center gap-2 pl-1 pr-3 py-1 ml-2 border border-white/10 rounded-full cursor-pointer bg-white/[0.03] hover:bg-white/5 transition-colors">
+            <div className="w-6 h-6 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-[10px] font-bold text-primary">
+              MC
+            </div>
+            <span className="text-[12.5px] font-medium text-foreground">Marco C.</span>
+            <span className="text-[10px] text-muted-foreground/60 ml-0.5">▼</span>
+          </div>
+        )}
       </div>
     </nav>
   );
