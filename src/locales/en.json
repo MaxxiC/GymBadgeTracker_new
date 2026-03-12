@@ -30,5 +30,33 @@
     "subtitle": "Page not found",
     "desc": "The page you are looking for might have been removed or is temporarily unavailable.",
     "back": "Back to Home"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to your account to continue",
+    "email_label": "Email Address",
+    "email_placeholder": "e.g. mario@gym.com",
+    "password_label": "Password",
+    "password_placeholder": "••••••••",
+    "submit": "Sign in to Workspace",
+    "forgot": "Forgot your password?",
+    "no_account": "Don't have an account?",
+    "contact_admin": "Contact the administrator"
+  },
+  "dashboard": {
+    "title_upload": "Upload Area",
+    "upload_zone": "Drag & drop or click to upload",
+    "upload_reqs": ".xlsx · .xls · .csv — max 20 MB",
+    "file_remove": "Remove",
+    "file_process": "Process →",
+    "sheets_found": "Sheets found",
+    "rows": "Rows",
+    "cols": "Columns",
+    "size": "Size",
+    "history_title": "History",
+    "history_download": "↓ Download",
+    "history_reuse": "Reuse",
+    "status_done": "Processed",
+    "status_waiting": "Waiting"
   }
 }

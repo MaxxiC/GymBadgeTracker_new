@@ -30,5 +30,33 @@
     "subtitle": "Pagina non trovata",
     "desc": "La pagina che cerchi potrebbe essere stata rimossa o è temporaneamente non disponibile.",
     "back": "Torna alla Home"
+  },
+  "login": {
+    "title": "Bentornato",
+    "subtitle": "Accedi al tuo account per continuare",
+    "email_label": "Indirizzo Email",
+    "email_placeholder": "es. mario@palestra.it",
+    "password_label": "Password",
+    "password_placeholder": "••••••••",
+    "submit": "Accedi all'Area di Lavoro",
+    "forgot": "Hai dimenticato la password?",
+    "no_account": "Non hai un account?",
+    "contact_admin": "Contatta l'amministratore"
+  },
+  "dashboard": {
+    "title_upload": "Caricamento",
+    "upload_zone": "Trascina o clicca per caricare",
+    "upload_reqs": ".xlsx · .xls · .csv — max 20 MB",
+    "file_remove": "Rimuovi",
+    "file_process": "Elabora →",
+    "sheets_found": "Fogli trovati",
+    "rows": "Righe",
+    "cols": "Colonne",
+    "size": "Dimensione",
+    "history_title": "Cronologia",
+    "history_download": "↓ Scarica",
+    "history_reuse": "Riusa",
+    "status_done": "Elaborato",
+    "status_waiting": "In attesa"
   }
 }
