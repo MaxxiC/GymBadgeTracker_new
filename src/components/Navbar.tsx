@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Monitor, Menu } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Moon, Sun, Monitor, Menu, User, LogOut, ChevronDown, X } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
 import { useLanguage } from "@/components/language-provider";
 import { usePathname } from "next/navigation";
 
@@ -12,17 +12,59 @@ export default function Navbar() {
   const { locale, setLocale, t } = useLanguage();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const [userData, setUserData] = useState<{ name: string, email: string } | null>(null);
+
+  // Layout states
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   // Fake auth check for UI
-  const isAuthenticated = pathname?.includes("/dashboard");
+  const isAuthenticated = pathname?.includes("/dashboard") || pathname?.includes("/profile");
 
-  // Evitare hydration mismatch con next-themes
   useEffect(() => {
     setMounted(true);
+
+    // Fetch user data if we might be authenticated
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated && data.user) {
+            setUserData(data.user);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch user data", err);
+      }
+    };
+
+    fetchUser();
+  }, [pathname]);
+
+  // Click outside to close user menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      window.location.href = "/login";
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
+
   return (
-    <nav className="flex items-center justify-between px-6 py-4 border-b border-border relative z-10 flex-shrink-0 bg-background/50 backdrop-blur-md">
+    <nav className="flex items-center justify-between px-6 py-4 border-b border-border relative z-50 flex-shrink-0 bg-background/50 backdrop-blur-md">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2.5">
         <div className="w-[30px] h-[30px] bg-white/5 border border-white/10 rounded-lg flex items-center justify-center">
@@ -40,7 +82,7 @@ export default function Navbar() {
 
       {/* Links Center (Hidden on mobile) */}
       <div className="hidden md:flex gap-6 items-center">
-        <Link href="/dashboard" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+        <Link href="/dashboard" className={`text-[13px] font-medium transition-colors ${pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}>
           {t("nav.workspace")}
         </Link>
         <Link href="/badges" className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">
@@ -55,14 +97,14 @@ export default function Navbar() {
       <div className="flex gap-2 items-center">
         {/* Mock Language switch */}
         <div className="hidden sm:flex gap-1 items-center px-2.5 py-1 border border-border rounded-full text-xs text-muted-foreground">
-          <button 
+          <button
             className={`hover:text-foreground ${locale === "it" ? "font-medium text-foreground" : ""}`}
             onClick={() => setLocale("it")}
           >
             ITA
           </button>
           <span className="opacity-25">/</span>
-          <button 
+          <button
             className={`hover:text-foreground ${locale === "en" ? "font-medium text-foreground" : ""}`}
             onClick={() => setLocale("en")}
           >
@@ -84,26 +126,119 @@ export default function Navbar() {
         </button>
 
         {/* Mobile menu toggle */}
-        <button className="md:hidden w-[30px] h-[30px] border border-border rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground bg-transparent">
-          <Menu size={16} />
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden w-[30px] h-[30px] border border-border rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground bg-transparent transition-colors"
+        >
+          {isMobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
         </button>
 
         {/* Login Btn OR Avatar */}
-        {!isAuthenticated ? (
-          <Link 
+        {!userData && !isAuthenticated ? (
+          <Link
             href="/login"
             className="hidden sm:block px-4 py-1.5 border border-white/15 dark:border-white/10 rounded-lg text-[13px] bg-white/5 text-foreground hover:bg-white/10 transition-colors ml-2"
           >
             {t("nav.login")}
           </Link>
         ) : (
-          <div className="hidden sm:flex items-center gap-2 pl-1 pr-3 py-1 ml-2 border border-white/10 rounded-full cursor-pointer bg-white/[0.03] hover:bg-white/5 transition-colors">
-            <div className="w-6 h-6 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-[10px] font-bold text-primary">
-              MC
+          <div className="relative hidden sm:block" ref={userMenuRef}>
+            <div
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+              className="flex items-center gap-2 pl-1 pr-3 py-1 ml-2 border border-white/10 rounded-full cursor-pointer bg-white/[0.03] hover:bg-white/5 transition-colors"
+            >
+              <div className="w-6 h-6 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-[10px] font-bold text-primary uppercase">
+                {userData?.name ? userData.name.substring(0, 2) : "US"}
+              </div>
+              <span className="text-[12.5px] font-medium text-foreground select-none">
+                {userData?.name || "Utente"}
+              </span>
+              <ChevronDown size={14} className={`text-muted-foreground/60 transition-transform duration-200 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
             </div>
-            <span className="text-[12.5px] font-medium text-foreground">Marco C.</span>
-            <span className="text-[10px] text-muted-foreground/60 ml-0.5">▼</span>
+
+            {/* Desktop User Dropdown */}
+            <div
+              className={`absolute right-0 top-full mt-2 w-56 bg-background/95 backdrop-blur-xl border border-border rounded-xl shadow-2xl py-1.5 z-50 transition-all duration-300 origin-top-right ${isUserMenuOpen ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible pointer-events-none"
+                }`}
+            >
+              <div className="px-4 py-2 mb-1 border-b border-border">
+                <p className="text-[13px] font-bold text-foreground truncate">{userData?.name || "Utente"}</p>
+                <p className="text-[11px] text-muted-foreground truncate">{userData?.email || "Nessuna email"}</p>
+              </div>
+              <Link
+                href="/profile"
+                onClick={() => setIsUserMenuOpen(false)}
+                className="flex items-center gap-2 px-4 py-2.5 text-[13px] text-muted-foreground hover:text-foreground hover:bg-white/[0.03] transition-colors"
+              >
+                <User size={15} />
+                {t("nav.profile")}
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center gap-2 px-4 py-2.5 text-[13px] text-destructive hover:bg-destructive/10 transition-colors"
+              >
+                <LogOut size={15} />
+                {t("nav.logout")}
+              </button>
+            </div>
           </div>
+        )}
+      </div>
+
+      {/* Mobile Menu Dropdown View */}
+      <div
+        className={`absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border flex flex-col gap-3 md:hidden shadow-2xl overflow-hidden transition-all duration-300 ease-in-out z-40 ${isMobileMenuOpen
+            ? "max-h-[500px] opacity-100 p-4"
+            : "max-h-0 opacity-0 p-0 pointer-events-none"
+          }`}
+      >
+        {(userData || isAuthenticated) && (
+          <Link
+            href="/dashboard"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="px-4 py-3 rounded-xl bg-primary/10 text-primary font-bold flex items-center gap-3 transition-colors"
+          >
+            <Monitor size={18} />
+            {t("nav.workspace")}
+          </Link>
+        )}
+        <Link href="/badges" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 rounded-xl hover:bg-white/[0.03] text-muted-foreground hover:text-foreground font-medium transition-colors flex items-center gap-3">
+          {t("nav.badges")}
+        </Link>
+        <Link href="/info" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 rounded-xl hover:bg-white/[0.03] text-muted-foreground hover:text-foreground font-medium transition-colors flex items-center gap-3">
+          {t("nav.info")}
+        </Link>
+
+        {(userData || isAuthenticated) ? (
+          <div className="pt-3 mt-1 border-t border-border flex flex-col gap-1">
+            <div className="px-4 pb-2 mb-1">
+              <p className="text-[14px] font-bold text-foreground">{userData?.name || "Utente"}</p>
+              <p className="text-[12px] text-muted-foreground">{userData?.email}</p>
+            </div>
+            <Link
+              href="/profile"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3 rounded-xl hover:bg-white/[0.03] text-foreground font-medium flex items-center gap-3 transition-colors"
+            >
+              <User size={18} />
+              {t("nav.profile")}
+            </Link>
+            <button
+              onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }}
+              className="px-4 py-3 text-left rounded-xl hover:bg-destructive/10 text-destructive font-bold flex items-center gap-3 transition-colors w-full"
+            >
+              <LogOut size={18} />
+              {t("nav.logout")}
+            </button>
+          </div>
+        ) : (
+          <Link
+            href="/login"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="mt-2 px-4 py-3 bg-foreground text-background text-center rounded-xl font-bold flex justify-center w-full"
+          >
+            {t("nav.login")}
+          </Link>
         )}
       </div>
     </nav>
