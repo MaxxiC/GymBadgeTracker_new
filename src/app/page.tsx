@@ -60,8 +60,8 @@ export default function Home() {
       {/* Right Column (Stats/Preview) */}
       <div className="flex-shrink-0 flex flex-col gap-2.5 w-full md:w-[280px] z-10">
         
-        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-sm">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-primary/10">
+        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all cursor-default group">
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-primary/10 group-hover:bg-primary/20 transition-colors">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <rect x="2" y="2" width="14" height="14" rx="2" stroke="var(--primary)" strokeWidth="1.2"/>
               <line x1="5" y1="6" x2="13" y2="6" stroke="var(--primary)" strokeWidth="1.1" strokeLinecap="round"/>
@@ -75,8 +75,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-sm">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-accent/10">
+        <div className="bg-card border border-border rounded-xl p-4 flex items-center gap-3.5 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all cursor-default group">
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-accent/10 group-hover:bg-accent/20 transition-colors">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <circle cx="9" cy="7" r="3" stroke="var(--accent)" strokeWidth="1.2"/>
               <path d="M3 15c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="var(--accent)" strokeWidth="1.2" strokeLinecap="round"/>
@@ -88,20 +88,20 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-4 shadow-sm">
-          <p className="text-[11px] font-medium tracking-wider uppercase text-muted-foreground mb-3">{t("home.how_it_works")}</p>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-5 h-5 rounded-full bg-secondary border border-border text-[11px] font-medium text-muted-foreground flex items-center justify-center flex-shrink-0">1</div>
-              <span className="text-[12.5px] text-muted-foreground">{t("home.step_1")}</span>
+        <div className="bg-card border border-border rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+          <p className="text-[11px] font-bold tracking-wider uppercase text-muted-foreground mb-4">{t("home.how_it_works")}</p>
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-white/[0.03] transition-colors group cursor-default">
+              <div className="w-6 h-6 rounded-full bg-secondary border border-border text-[11px] font-medium text-muted-foreground flex items-center justify-center flex-shrink-0 group-hover:text-foreground group-hover:bg-white/10 transition-colors">1</div>
+              <span className="text-[13px] text-muted-foreground group-hover:text-foreground transition-colors">{t("home.step_1")}</span>
             </div>
-            <div className="flex items-center gap-2.5">
-              <div className="w-5 h-5 rounded-full bg-secondary border border-border text-[11px] font-medium text-muted-foreground flex items-center justify-center flex-shrink-0">2</div>
-              <span className="text-[12.5px] text-muted-foreground">{t("home.step_2")}</span>
+            <div className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-white/[0.03] transition-colors group cursor-default">
+              <div className="w-6 h-6 rounded-full bg-secondary border border-border text-[11px] font-medium text-muted-foreground flex items-center justify-center flex-shrink-0 group-hover:text-foreground group-hover:bg-white/10 transition-colors">2</div>
+              <span className="text-[13px] text-muted-foreground group-hover:text-foreground transition-colors">{t("home.step_2")}</span>
             </div>
-            <div className="flex items-center gap-2.5">
-              <div className="w-5 h-5 rounded-full bg-primary/20 border border-primary/30 text-[11px] font-bold text-primary flex items-center justify-center flex-shrink-0">3</div>
-              <span className="text-[12.5px] text-foreground font-medium">{t("home.step_3")}</span>
+            <div className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-white/[0.03] transition-colors group cursor-default">
+              <div className="w-6 h-6 rounded-full bg-primary/20 border border-primary/30 text-[11px] font-bold text-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/30 transition-colors shadow-[0_0_10px_rgba(99,153,34,0.2)]">3</div>
+              <span className="text-[13px] text-foreground font-semibold group-hover:text-primary transition-colors">{t("home.step_3")}</span>
             </div>
           </div>
         </div>
