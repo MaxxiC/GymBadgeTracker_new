@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Monitor, Menu, User, LogOut, ChevronDown, X } from "lucide-react";
+import { Moon, Sun, Monitor, Menu, User, LogOut, ChevronDown, X, ShieldAlert } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { useLanguage } from "@/components/language-provider";
 import { usePathname } from "next/navigation";
@@ -12,7 +12,7 @@ export default function Navbar() {
   const { locale, setLocale, t } = useLanguage();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
-  const [userData, setUserData] = useState<{ name: string, email: string } | null>(null);
+  const [userData, setUserData] = useState<{ name: string, email: string, role?: string } | null>(null);
 
   // Layout states
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,7 +25,6 @@ export default function Navbar() {
   useEffect(() => {
     setMounted(true);
 
-    // Fetch user data if we might be authenticated
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/auth/me");
@@ -36,14 +35,13 @@ export default function Navbar() {
           }
         }
       } catch (err) {
-        console.error("Failed to fetch user data", err);
+        // Silently fail intentionally to avoid console errors
       }
     };
 
     fetchUser();
   }, [pathname]);
 
-  // Click outside to close user menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
@@ -62,6 +60,17 @@ export default function Navbar() {
       console.error("Logout failed", err);
     }
   };
+
+  // Dynamic Navigation Links Logic
+  const navLinks = [
+
+    { href: "/dashboard", label: t("nav.workspace"), icon: <Monitor size={18} /> },
+    { href: "/features", label: t("nav.features") || "Features" },
+    { href: "/info", label: t("nav.info") },
+    ...(userData?.role === "admin" ? [
+      { href: "/admin", label: t("nav.admin"), icon: <ShieldAlert size={18} />, isAdmin: true }
+    ] : []),
+  ];
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 border-b border-border relative z-50 flex-shrink-0 bg-background/50 backdrop-blur-md">
@@ -82,15 +91,20 @@ export default function Navbar() {
 
       {/* Links Center (Hidden on mobile) */}
       <div className="hidden md:flex gap-6 items-center">
-        <Link href="/dashboard" className={`text-[13px] font-medium transition-colors ${pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}>
-          {t("nav.workspace")}
-        </Link>
-        <Link href="/badges" className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">
-          {t("nav.badges")}
-        </Link>
-        <Link href="/info" className="text-[13px] text-muted-foreground hover:text-foreground transition-colors">
-          {t("nav.info")}
-        </Link>
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={`text-[13px] transition-colors flex items-center gap-1.5 ${pathname === link.href
+                ? 'text-primary font-bold'
+                : link.isAdmin
+                  ? 'text-accent font-bold hover:opacity-80'
+                  : 'text-muted-foreground font-medium hover:text-foreground'
+              }`}
+          >
+            {link.label}
+          </Link>
+        ))}
       </div>
 
       {/* Right Actions */}
@@ -162,7 +176,10 @@ export default function Navbar() {
                 }`}
             >
               <div className="px-4 py-2 mb-1 border-b border-border">
-                <p className="text-[13px] font-bold text-foreground truncate">{userData?.name || "Utente"}</p>
+                <p className="text-[13px] font-bold text-foreground truncate flex items-center gap-1.5">
+                  {userData?.name || "Utente"}
+                  {userData?.role === 'admin' && <ShieldAlert size={12} className="text-accent" />}
+                </p>
                 <p className="text-[11px] text-muted-foreground truncate">{userData?.email || "Nessuna email"}</p>
               </div>
               <Link
@@ -188,31 +205,34 @@ export default function Navbar() {
       {/* Mobile Menu Dropdown View */}
       <div
         className={`absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border flex flex-col gap-3 md:hidden shadow-2xl overflow-hidden transition-all duration-300 ease-in-out z-40 ${isMobileMenuOpen
-            ? "max-h-[500px] opacity-100 p-4"
-            : "max-h-0 opacity-0 p-0 pointer-events-none"
+          ? "max-h-[500px] opacity-100 p-4"
+          : "max-h-0 opacity-0 p-0 pointer-events-none"
           }`}
       >
-        {(userData || isAuthenticated) && (
+        {navLinks.map((link) => (
           <Link
-            href="/dashboard"
+            key={link.href}
+            href={link.href}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="px-4 py-3 rounded-xl bg-primary/10 text-primary font-bold flex items-center gap-3 transition-colors"
+            className={`px-4 py-3 rounded-xl flex items-center gap-3 transition-colors ${pathname === link.href
+                ? 'bg-primary/10 text-primary font-bold'
+                : link.isAdmin
+                  ? 'bg-accent/10 text-accent font-bold'
+                  : 'hover:bg-white/[0.03] text-muted-foreground hover:text-foreground font-medium'
+              }`}
           >
-            <Monitor size={18} />
-            {t("nav.workspace")}
+            {link.icon && link.icon}
+            {link.label}
           </Link>
-        )}
-        <Link href="/badges" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 rounded-xl hover:bg-white/[0.03] text-muted-foreground hover:text-foreground font-medium transition-colors flex items-center gap-3">
-          {t("nav.badges")}
-        </Link>
-        <Link href="/info" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 rounded-xl hover:bg-white/[0.03] text-muted-foreground hover:text-foreground font-medium transition-colors flex items-center gap-3">
-          {t("nav.info")}
-        </Link>
+        ))}
 
         {(userData || isAuthenticated) ? (
           <div className="pt-3 mt-1 border-t border-border flex flex-col gap-1">
             <div className="px-4 pb-2 mb-1">
-              <p className="text-[14px] font-bold text-foreground">{userData?.name || "Utente"}</p>
+              <p className="text-[14px] font-bold text-foreground flex items-center gap-1.5">
+                {userData?.name || "Utente"}
+                {userData?.role === 'admin' && <ShieldAlert size={12} className="text-accent" />}
+              </p>
               <p className="text-[12px] text-muted-foreground">{userData?.email}</p>
             </div>
             <Link
