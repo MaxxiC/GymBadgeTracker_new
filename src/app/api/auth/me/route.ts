@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
 
     if (!token) {
-      return NextResponse.json({ authenticated: false }, { status: 401 });
+      return NextResponse.json({ authenticated: false }, { status: 200 });
     }
 
     // Decode and verify token
@@ -30,7 +30,6 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Auth Me API Error:", error);
-    return NextResponse.json({ authenticated: false }, { status: 401 });
+    return NextResponse.json({ authenticated: false }, { status: 200 });
   }
 }
