@@ -66,7 +66,7 @@ export default function Navbar() {
 
     { href: "/dashboard", label: t("nav.workspace"), icon: <Monitor size={18} /> },
     { href: "/features", label: t("nav.features") || "Features" },
-    { href: "/info", label: t("nav.info") },
+    { href: "/about", label: t("nav.about") || "About Us" },
     ...(userData?.role === "admin" ? [
       { href: "/admin", label: t("nav.admin"), icon: <ShieldAlert size={18} />, isAdmin: true }
     ] : []),
