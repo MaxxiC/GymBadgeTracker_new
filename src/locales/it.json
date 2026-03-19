@@ -14,19 +14,19 @@
     "cookie": "Cookie policy"
   },
   "home": {
-    "pill": "Piattaforma gamificata",
-    "title_1": "Traccia. Sblocca.",
-    "title_2": "Domina la palestra.",
-    "subtitle": "Carica i tuoi allenamenti, conquista badge esclusivi per i tuoi record e scala le classifiche. La tua progressione, visualizzata come mai prima d'ora.",
-    "cta_primary": "Inizia subito",
-    "cta_secondary": "Vedi come funziona",
-    "stats_workout": "workout tracciati",
-    "stats_badges": "badge sbloccati",
-    "how_it_works": "Come funziona",
-    "step_1": "Registra l'allentamento",
-    "step_2": "Guadagna Punti e XP",
-    "step_3": "Sblocca Badge Elite",
-    "preview": "Anteprima Dashboard →"
+    "pill": "Piattaforma SaaS B2B",
+    "title_1": "Analizza. Ottimizza.",
+    "title_2": "I tuoi dati in chiaro",
+    "subtitle": "Carica i file operativi della tua struttura, processali all'istante e ottieni dashboard visive per gestire al meglio le tue attività.",
+    "cta_primary": "Accedi all'Area",
+    "cta_secondary": "Scopri i vantaggi",
+    "stats_files": "file processati",
+    "stats_rows": "righe elaborate",
+    "how_it_works": "Flusso Operativo",
+    "step_1": "Carica fogli Excel (.xlsx)",
+    "step_2": "Il motore estrae i dati",
+    "step_3": "Esplora le statistiche",
+    "preview": "Anteprima Modulo Upload →"
   },
   "footer": {
     "about": "About Us",
