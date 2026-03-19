@@ -1,36 +1,35 @@
-# GymBadgeTracker (Web)
+# GymBadgeTracker (B2B SaaS)
 
-GymBadgeTracker è un'applicazione web moderna per tracciare i propri allenamenti in palestra, monitorare i progressi e sbloccare "badge" (obiettivi) al raggiungimento di determinati traguardi.
+Piattaforma B2B as a Service per le palestre. 
+Il sistema permette alle palestre clienti di caricare e analizzare i propri fogli Excel operativi, scalando i costi in base agli utilizzi (modello a crediti/utilizzi). L'obiettivo finale è offrire un servizio a pagamento per elaborare ed estrarre statistiche dai loro dati.
 
-Questa repository contiene l'intera applicazione, progettata per sostituire la vecchia architettura separata (frontend/backend) con un unico progetto **Next.js** full-stack, ottimizzato per il deploy su Vercel.
+---
 
-## 🚀 Tech Stack
+## Features Principali
 
-Come definito nel file di workflow, lo stack utilizzato è orientato alla semplicità e scalabilità delle app moderne:
+- **Elaborazione Dati:** I clienti (palestre) possono caricare i file Excel per l'elaborazione rapida informatica.
+- **Gestione a Crediti ("Utilizzi"):** Ogni account ha a disposizione un numero prefissato di utilizzi. L'analisi dei file è contingentata.
+- **Pannello Admin Avanzato:** 
+  - Gestione manuale degli account clienti (non è prevista la libera registrazione al pubblico).
+  - Ricarica manuale dei crediti (utilizzi rimanenti) per ogni account palestra.
+  - Log operativi dettagliati (chi ha fatto cosa, quali utenti si sono loggati di recente).
+  - Statistiche globali di utilizzo del sistema.
+- **Area Cliente Privata:** Dashboard per processare i file (usage page) e pagina riepilogativa con panoramica dati e statistiche.
 
-- **Framework**: [Next.js](https://nextjs.org/) (App Router, React)
-- **Styling**: Tailwind CSS / Vanilla CSS (Modern UI)
-- **Database & Auth**: [MongoDB](https://www.mongodb.com/)
-- **Email**: [Resend](https://resend.com/)
-- **Analytics**: [PostHog](https://posthog.com/)
-- **Deploy**: [Vercel](https://vercel.com/)
-- **Dominio**: Tophost
+## Stack Tecnologico
+- **Next.js (App Router)** & **React**
+- **Tailwind CSS**
+- **MongoDB** (con Mongoose)
 
-## 🛠 Come avviare il progetto in locale
+## Setup Locale
 
-1. **Installa le dipendenze**:
+1. Installa le dipendenze:
    ```bash
    npm install
    ```
-2. **Configura le variabili d'ambiente**:
-   Crea un file `.env.local` partendo da eventuali file di esempio e inserisci le chiavi relative a Supabase, ecc.
-3. **Avvia il server di sviluppo**:
+2. Configura le variabili d'ambiente copiando `.env.exemple` in `.env.local` e inserisci l'URI di MongoDB.
+3. Avvia il server di sviluppo:
    ```bash
    npm run dev
    ```
-4. Apri [http://localhost:3000](http://localhost:3000) nel browser.
-
-## 📂 Struttura della Cartella `src/`
-- `/app` - Le pagine dell'applicazione e le API Routes per Vercel.
-- `/components` - Componenti UI isolati e riutilizzabili.
-- `/lib` - Funzioni di utilità, configurazione database, middleware.
+Visita `http://localhost:3000`.
