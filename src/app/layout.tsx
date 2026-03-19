@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/components/language-provider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CookieBanner from "@/components/CookieBanner";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -57,11 +58,12 @@ export default function RootLayout({
             <Navbar />
 
             {/* Main content area expands to push footer down */}
-            <main className="flex-1 flex flex-col relative z-[2]">
+            <main className="flex-1 flex flex-col relative z-[2] overflow-y-auto overflow-x-hidden">
               {children}
             </main>
 
             <Footer />
+            <CookieBanner />
           </ThemeProvider>
         </LanguageProvider>
       </body>

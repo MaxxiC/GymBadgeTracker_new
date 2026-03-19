@@ -118,11 +118,11 @@
     color: var(--foreground);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    min-height: 100dvh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -171,4 +171,21 @@ html {
   right: -80px;
   pointer-events: none;
   z-index: 0;
+}
+
+/* Modal Animations */
+@keyframes overlayEnter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-overlay-enter {
+  animation: overlayEnter 0.25s ease-out forwards;
+}
+
+@keyframes modalEnter {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-modal-enter {
+  animation: modalEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

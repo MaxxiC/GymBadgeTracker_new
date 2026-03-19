@@ -14,19 +14,19 @@
     "cookie": "Cookie Policy"
   },
   "home": {
-    "pill": "Gamified platform",
-    "title_1": "Track. Unlock.",
-    "title_2": "Rule the gym.",
-    "subtitle": "Log your workouts, earn exclusive badges for your PRs, and climb the leaderboards. Your progression, visualized like never before.",
-    "cta_primary": "Start now",
-    "cta_secondary": "See how it works",
-    "stats_workout": "workouts tracked",
-    "stats_badges": "badges unlocked",
-    "how_it_works": "How it works",
-    "step_1": "Log your workout",
-    "step_2": "Earn Points & XP",
-    "step_3": "Unlock Elite Badges",
-    "preview": "Dashboard Preview →"
+    "pill": "B2B SaaS Platform",
+    "title_1": "Analyze. Optimize.",
+    "title_2": "Data Visulized.",
+    "subtitle": "Upload your facility's operational files, process them instantly, and get visual dashboards to better manage your operations.",
+    "cta_primary": "Sign In securely",
+    "cta_secondary": "Discover benefits",
+    "stats_files": "files processed",
+    "stats_rows": "rows analyzed",
+    "how_it_works": "Operational Flow",
+    "step_1": "Upload Excel sheets",
+    "step_2": "System parses the data",
+    "step_3": "Explore the statistics",
+    "preview": "Upload Module Preview →"
   },
   "footer": {
     "about": "About Us",
@@ -78,5 +78,32 @@
     "stats": "Statistics",
     "total_process": "Total Files Processed",
     "last_login": "Last Login"
+  },
+  "features": {
+    "title": "Features",
+    "subtitle": "All the tools your gym needs, in one platform",
+    "feature_1_title": "Simplified Upload",
+    "feature_1_desc": "Upload your operational Excel files easily with Drag & Drop.",
+    "feature_2_title": "Instant Parsing",
+    "feature_2_desc": "Our engine parses and cleans your data rows securely in seconds.",
+    "feature_3_title": "Advanced Statistics",
+    "feature_3_desc": "Generate visual dashboards and KPIs to monitor your business performance."
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Streamlining data management for sports centers.",
+    "content_1": "We are a team of analysts and developers with a mission: eliminating the clutter of endless spreadsheets.",
+    "content_2": "Our SaaS tool is built specifically to address the b2b needs of modern fitness centers."
+  },
+  "legal": {
+    "privacy_title": "Privacy Policy",
+    "cookie_title": "Cookie Policy",
+    "last_updated": "Last updated: May 2025"
+  },
+  "cookie_banner": {
+    "message": "We use cookies to improve your experience and for essential analytical features. By continuing to browse you agree to our",
+    "accept": "Accept",
+    "decline": "Decline",
+    "policy": "Cookie Policy"
   }
 }
