@@ -1,9 +1,17 @@
 {
   "nav": {
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "profile": "My Profile",
     "workspace": "Workspace",
     "badges": "My Badges",
+    "home": "Dashboard",
+    "admin": "Admin",
+    "features": "Features",
     "info": "Info",
-    "login": "Sign In"
+    "about": "About Us",
+    "privacy": "Privacy Policy",
+    "cookie": "Cookie Policy"
   },
   "home": {
     "pill": "Gamified platform",
