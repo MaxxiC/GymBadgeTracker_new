@@ -78,5 +78,32 @@
     "stats": "Statistiche",
     "total_process": "File Elaborati totali",
     "last_login": "Ultimo Accesso"
+  },
+  "features": {
+    "title": "Funzionalità",
+    "subtitle": "Tutti gli strumenti necessari per la tua palestra, in un'unica piattaforma",
+    "feature_1_title": "Upload Semplificato",
+    "feature_1_desc": "Carica i tuoi file operativi o gestionali in Excel tramite Drag & Drop.",
+    "feature_2_title": "Parsing Instantaneo",
+    "feature_2_desc": "Il nostro motore analizza e ripulisce le tue righe di dati in pochi secondi.",
+    "feature_3_title": "Statistiche Avanzate",
+    "feature_3_desc": "Genera visualizzazioni grafiche e metriche chiave per monitorare l'andamento del tuo business."
+  },
+  "about": {
+    "title": "Chi Siamo",
+    "subtitle": "Trasformiano i dati operativi in decisioni strategiche.",
+    "content_1": "Siamo un team di analisti e sviluppatori accomunati da una missione: eliminare la confusione provocata dai fogli di calcolo sparsi.",
+    "content_2": "Il nostro strumento SaaS è costruito specificatamente per rispondere alle necessità b2b dei centri fitness moderni."
+  },
+  "legal": {
+    "privacy_title": "Privacy Policy",
+    "cookie_title": "Cookie Policy",
+    "last_updated": "Ultimo aggiornamento: Maggio 2025"
+  },
+  "cookie_banner": {
+    "message": "Utilizziamo i cookie per migliorare la tua esperienza e per fini analitici essenziali al funzionamento del sito. Continuando a navigare accetti la nostra",
+    "accept": "Accetto",
+    "decline": "Rifiuto",
+    "policy": "Cookie Policy"
   }
 }
