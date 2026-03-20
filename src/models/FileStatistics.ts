@@ -1,18 +1,20 @@
 // File: src/models/FileStatistics.ts
-import mongoose, { Schema, Document, Types } from "mongoose";
+//
+// ⚠️  DEPRECATED — This model is no longer in use.
+//
+// All statistics (rows_total, rows_processed, people_processed) have been
+// merged directly into FileIn.ts for simplicity.
+//
+// This file is kept as a placeholder to avoid breaking any potential old
+// references, but no new documents should be written to this collection.
+//
+// Safe to delete once you've confirmed no old data relies on it.
 
-export interface IFileStatistics extends Document {
-  file_id: Types.ObjectId; // Riferimento al file originale (FileIn)
-  total_rows: number;
-  processed_rows: number;
-  created_at: Date;
-}
+import mongoose, { Schema } from "mongoose";
 
-const FileStatisticsSchema = new Schema<IFileStatistics>({
-  file_id: { type: Schema.Types.ObjectId, ref: 'FileIn', required: true },
-  total_rows: { type: Number, required: true },
-  processed_rows: { type: Number, required: true },
-  created_at: { type: Date, default: Date.now },
+const FileStatisticsSchema = new Schema({
+  _deprecated: { type: Boolean, default: true },
 });
 
-export default mongoose.models.FileStatistics || mongoose.model<IFileStatistics>("FileStatistics", FileStatisticsSchema);
+export default mongoose.models.FileStatistics ||
+  mongoose.model("FileStatistics", FileStatisticsSchema);
