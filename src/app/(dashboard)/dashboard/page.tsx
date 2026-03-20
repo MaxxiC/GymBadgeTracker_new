@@ -10,13 +10,48 @@ export default function DashboardPage() {
   // Real File States
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [parseResult, setParseResult] = useState<{ rows: number; cols: number; sheets: string[]; sizeKB: number } | null>(null);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   // Processing Parameters
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [autoHeader, setAutoHeader] = useState(true);
   const [filterEmpty, setFilterEmpty] = useState(true);
+
+  // Connection to API (Mini-Task 3)
+  const handleProcessFile = async () => {
+    if (!file) return;
+    setIsProcessing(true);
+    setError(null);
+    setSuccessMsg(null);
+    setParseResult(null);
+    setIsModalOpen(false);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/dashboard/upload", {
+        method: "POST",
+        body: formData
+      });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        setError(data.error || "Errore durante il caricamento verso il server.");
+      } else {
+        setSuccessMsg(`Elaborazione completata: ${data.result?.sheets?.length ?? 0} fogli trovati.`);
+        setParseResult(data.result ?? null);
+      }
+    } catch (e) {
+      setError("Errore di rete. Impossibile contattare il server dell'Applicazione.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   // Helpers
   const formatFileSize = (bytes: number) => {
@@ -73,6 +108,20 @@ export default function DashboardPage() {
           <div className="mb-4 p-3 rounded-xl border border-red-500/20 bg-red-500/10 text-red-500 text-[13px] font-medium flex items-center justify-between">
             {error}
             <button onClick={() => setError(null)} className="hover:text-red-400"><X size={14} /></button>
+          </div>
+        )}
+
+        {successMsg && (
+          <div className="mb-4 p-3 rounded-xl border border-green-500/20 bg-green-500/10 text-green-600 dark:text-green-400 text-[13px] font-medium flex items-center justify-between">
+            ✓ {successMsg}
+            <button onClick={() => setSuccessMsg(null)} className="hover:opacity-70"><X size={14} /></button>
+          </div>
+        )}
+
+        {isProcessing && (
+          <div className="mb-4 p-3 rounded-xl border border-primary/20 bg-primary/5 text-primary text-[13px] font-medium flex items-center gap-2">
+            <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            Analisi del file in corso...
           </div>
         )}
 
@@ -147,34 +196,48 @@ export default function DashboardPage() {
                    </button>
                    <button 
                     onClick={() => setIsModalOpen(true)}
-                    className="flex-1 sm:flex-none px-4 py-1.5 text-[12.5px] font-bold border border-primary/20 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors flex items-center justify-center gap-1.5"
+                    disabled={isProcessing}
+                    className="flex-1 sm:flex-none px-4 py-1.5 text-[12.5px] font-bold border border-primary/20 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-wait"
                   >
-                    {t("dashboard.file_process")}
+                    {isProcessing ? "Elaborazione..." : t("dashboard.file_process")}
                    </button>
                 </div>
               </div>
 
-              {/* Sheets Row Placeholder */}
+              {/* Sheets Row */}
               <div className="mb-4">
                 <div className="text-[11px] font-bold tracking-[0.05em] uppercase text-muted-foreground mb-2">
                   {t("dashboard.sheets_found")}
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-[12px] text-muted-foreground italic">
-                    I fogli saranno visibili dopo l'elaborazione.
-                  </span>
+                  {parseResult?.sheets && parseResult.sheets.length > 0 ? (
+                    parseResult.sheets.map((sheet, i) => (
+                      <button key={i} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[12px] font-medium transition-colors ${
+                        i === 0
+                          ? 'bg-primary/10 border border-primary/30 text-primary'
+                          : 'bg-muted/20 border border-border text-muted-foreground hover:text-foreground'
+                      }`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-current opacity-70"></span>
+                        {sheet}
+                      </button>
+                    ))
+                  ) : (
+                    <span className="text-[12px] text-muted-foreground italic">
+                      I fogli saranno visibili dopo l'elaborazione.
+                    </span>
+                  )}
                 </div>
               </div>
 
-              {/* Meta Grid Placeholder */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-border opacity-50 pointer-events-none">
+              {/* Meta Grid - live after parsing */}
+              <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-border transition-opacity ${parseResult ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
                 <div className="bg-background border border-border rounded-lg p-3">
                   <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground mb-1">{t("dashboard.rows")}</div>
-                  <div className="text-[16px] font-bold text-foreground">--</div>
+                  <div className="text-[16px] font-bold text-foreground">{parseResult ? parseResult.rows.toLocaleString('it-IT') : '--'}</div>
                 </div>
                 <div className="bg-background border border-border rounded-lg p-3">
                   <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground mb-1">{t("dashboard.cols")}</div>
-                  <div className="text-[16px] font-bold text-foreground">--</div>
+                  <div className="text-[16px] font-bold text-foreground">{parseResult ? parseResult.cols : '--'}</div>
                 </div>
                 <div className="bg-background border border-border rounded-lg p-3">
                   <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground mb-1">{t("dashboard.size")}</div>
@@ -351,10 +414,11 @@ export default function DashboardPage() {
                 Annulla
               </button>
               <button 
-                className="flex-[2] py-2.5 bg-primary text-primary-foreground font-bold rounded-xl text-[14px] hover:opacity-90 shadow-sm transition-opacity"
-                onClick={() => setIsModalOpen(false)}
+                className="flex-[2] py-2.5 bg-primary text-primary-foreground font-bold rounded-xl text-[14px] hover:opacity-90 shadow-sm transition-opacity disabled:opacity-60 disabled:cursor-wait"
+                onClick={handleProcessFile}
+                disabled={isProcessing}
               >
-                Avvia elaborazione →
+                {isProcessing ? "Elaborazione in corso..." : "Avvia elaborazione →"}
               </button>
             </div>
             
