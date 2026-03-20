@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       { 
         id: user._id, 
         email: user.email, 
-        role: user.user_type || "standard",
+        role: user.role || "user",
         name: user.username 
       },
       JWT_SECRET,
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json(
       { 
         message: "Login successful", 
-        user: { email: user.email, name: user.username, role: user.user_type } 
+        user: { email: user.email, name: user.username, role: user.role } 
       },
       { status: 200 }
     );
