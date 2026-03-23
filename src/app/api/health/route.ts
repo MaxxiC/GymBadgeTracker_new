@@ -6,6 +6,6 @@ export async function GET() {
     await connectToDatabase();
     return NextResponse.json({ status: "ok", db: "connected" });
   } catch {
-    return NextResponse.json({ status: "error", db: "disconnected" }, { status: 500 });
+    return NextResponse.json({ status: "error", db: "disconnected" }, { status: 503 });
   }
 }
